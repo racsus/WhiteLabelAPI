@@ -1,0 +1,5 @@
+﻿{
+  "WhiteLabelAPIContext": {
+    "ConnectionString": "Server=tcp:[database_hostname],1433;Initial Catalog=[database_name];Persist Security Info=False;User ID=[database_user];Password=[database_password];MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=300;"
+  }
+}
