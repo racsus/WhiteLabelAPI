@@ -31,6 +31,20 @@ namespace Infrastructure.Data.Repositories.Security
 
         public async Task<bool> UpdateUser(User user)
         {
+            //Get User
+            if (user.CustomerId == 0)
+            {
+                var item = await GetUserByReference(user.UserReference);
+                if (item == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    user.UserId = item.UserId;
+                }
+            }
+
             _cleanArchitectureContext.Users.Update(user);
             return await _cleanArchitectureContext.SaveChangesAsync() > 0;
         }
