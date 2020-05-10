@@ -13,6 +13,7 @@ namespace Core.Interfaces.Security
         Task<List<User>> GetAllUsers();
         Task<bool> DeleteUser(string userReference);
         Task<User> GetUserByReference(string userReference);
+        Task<User> GetUserByEmail(string email);
         Task<bool> IsReferenceExists(string userReference);
     }
 }

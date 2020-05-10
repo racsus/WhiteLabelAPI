@@ -44,7 +44,12 @@ namespace WhiteLabelAPI.Controllers
         public async Task<IActionResult> AddUser([FromBody] UserDTO user)
         {
             Guard.Requires(user, nameof(user)).IsNotNull();
-            return Ok(await _securityService.AddUser(_mapper.Map<User>(user)));
+            if (ModelState.IsValid)
+            {
+                return Ok(await _securityService.AddUser(_mapper.Map<User>(user)));
+            }
+            
+            return BadRequest(ModelState);
         }
 
         [HttpPut, Route("users")]

@@ -20,6 +20,9 @@ namespace WhiteLabelAPI
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    //TODO. I had to add this line to avoid a problem with the nuget MicroElements.Swashbuckle.FluentValidation
+                    //https://github.com/micro-elements/MicroElements.Swashbuckle.FluentValidation/issues/15
+                    webBuilder.UseDefaultServiceProvider(options => options.ValidateScopes = false);
                     webBuilder.UseStartup<Startup>();
                 });
     }

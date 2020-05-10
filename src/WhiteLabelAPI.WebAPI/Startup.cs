@@ -16,6 +16,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using FluentValidation.AspNetCore;
+using Core.Validators.Security;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace WhiteLabelAPI
 {
@@ -56,6 +59,13 @@ namespace WhiteLabelAPI
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
 
+            //Fluent Validation
+            services.AddMvc()
+           .AddFluentValidation(o =>
+           {
+               o.RegisterValidatorsFromAssemblyContaining<UserDTOValidator>();
+           });
+
             // DI
             DependencyBuilder.AddDependencies(services, Configuration);
 
@@ -69,6 +79,7 @@ namespace WhiteLabelAPI
                     Description = "WhiteLabel ASP.NET Core Web API",
                     TermsOfService = new Uri("https://www.yourwebsite.com/termsandservice")
                 });
+                c.AddFluentValidationRules();
                 c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

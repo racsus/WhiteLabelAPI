@@ -13,5 +13,6 @@ namespace Core.Interfaces.Security
         Task<User> AddUser(User user);
         Task<bool> UpdateUser(User user);
         Task<bool> DeleteUser(string userReference);
+        Task<User> GetUserByEmail(string email);
     }
 }

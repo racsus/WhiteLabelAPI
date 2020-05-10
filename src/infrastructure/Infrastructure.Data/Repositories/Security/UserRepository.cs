@@ -49,6 +49,13 @@ namespace Infrastructure.Data.Repositories.Security
                 .Where(x => x.DateDeleted == null && x.UserReference == userReference).FirstOrDefaultAsync();
         }
 
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _cleanArchitectureContext.Users
+                .AsNoTracking()
+                .Where(x => x.DateDeleted == null && x.Email == email).FirstOrDefaultAsync();
+        }
+
         public async Task<bool> DeleteUser(string userReference)
         {
             User user = (await GetUserByReference(userReference));

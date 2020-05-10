@@ -40,5 +40,10 @@ namespace Core.Services
         {
             return await _userRepository.GetAllUsers();
         }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _userRepository.GetUserByEmail(email);
+        }
     }
 }
