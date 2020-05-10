@@ -13,19 +13,27 @@ namespace Core.Validators.Security
         public UserDTOValidator(ISecurityService securityService)
         {
             _securityService = securityService;
+
+            //Required Checks
             RuleFor(x => x.UserReference).NotEmpty();
-            RuleFor(x => x.UserReference).MaximumLength(100);
-            RuleFor(x => x.Name).MaximumLength(100);
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Email).NotEmpty();
+
+            //Max Length
+            RuleFor(x => x.UserReference).MaximumLength(100);
+            RuleFor(x => x.Name).MaximumLength(100);
+
+            //Regular Expression Checks
             RuleFor(x => x.Email).Matches(@"^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$");
-            RuleFor(x => x.Email).MustAsync(IsEmailAlreadyInDatabase);
+
+            //Database Checks
+            RuleFor(x => x.Email).MustAsync(IsEmailAlreadyInDatabase).WithMessage("Email already exists in database."); ;
         }
 
         private async Task<bool> IsEmailAlreadyInDatabase(string abbreviation, CancellationToken token)
         {
             var user = await _securityService.GetUserByEmail(abbreviation);
-            return user != null;
+            return user == null;
         }
     }
 }
