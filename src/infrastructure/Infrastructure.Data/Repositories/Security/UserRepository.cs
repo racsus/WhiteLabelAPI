@@ -23,7 +23,7 @@ namespace Infrastructure.Data.Repositories.Security
             _cleanArchitectureContext.Users.Add(user);
             if (await _cleanArchitectureContext.SaveChangesAsync() > 0)
             {
-                var res = await GetUserByReference(user.UserReference);
+                return await GetUserByReference(user.UserReference);
             }
 
             return null;
